@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Code Learning Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --deep-blue: #0A2342;
+            --rich-teal: #39A9DB;
+            --soft-gray: #E8F1F2;
+            --accent-coral: #FF4F4F;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-gray);
+            line-height: 1.6;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 4rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            color: var(--rich-teal);
+            font-size: 1.5rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: var(--rich-teal);
+            transform: scale(1.2);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--rich-teal);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--rich-teal);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .cta-button2 {
+            background-color: var(--rich-teal);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(57,169,219,0.3);
+        }
+        .cta-button2:hover {
+            background-color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(10,35,66,0.2);
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--deep-blue);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 70%;
+                height: 100%;
+                justify-content: center;
+                transition: 0.3s;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .logo {
+                font-size: 1rem;
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            .cta-button2{
+                display: none;
+            }
+
+            .hero h1{
+                font-size: 2.5rem;
+            }
+            
+        }
+
+
+
+
+
+
+        :root {
+            --primary: #6c2eff;
+            --secondary: #ff39b0;
+            --text: #333;
+            --bg: #f8f9fa;
+            --card-bg: #fff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-top: 6rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .policy-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .policy-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .policy-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 3rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 46, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            CodeWithCreator
+        </div>
+        <ul class="nav-links">
+            <li><a href="./index.html" class="active">Home</a></li>
+            <li><a href="./course.html">Courses</a></li>
+            <li><a href="Resources.html">Resources</a></li>
+            <li><a href="./project.html">Projects</a></li>
+            <li><a href="./contact-form (1).html">Contact</a></li>
+        </ul>
+        <a href="./course.html" class="cta-button2">Start Course</a>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Privacy Policy</h1>
+            <p class="subtitle">Your privacy matters to us. Learn how we protect and manage your data.</p>
+        </header>
+
+        <div class="policy-grid">
+            <div class="policy-card" onclick="showModal('data-collection')">
+                <i class="fas fa-database"></i>
+                <h3>Data Collection</h3>
+                <p>Learn about what information we collect and how it's used to improve your learning experience.</p>
+            </div>
+
+            <div class="policy-card" onclick="showModal('data-security')">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Data Security</h3>
+                <p>Discover the measures we take to keep your personal information safe and secure.</p>
+            </div>
+
+            <div class="policy-card" onclick="showModal('user-rights')">
+                <i class="fas fa-user-shield"></i>
+                <h3>Your Rights</h3>
+                <p>Understand your rights regarding your personal data and how to exercise them.</p>
+            </div>
+
+            <div class="policy-card" onclick="showModal('cookies')">
+                <i class="fas fa-cookie-bite"></i>
+                <h3>Cookie Policy</h3>
+                <p>Information about how we use cookies and similar technologies on our platform.</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Have questions about our privacy policy?</h2>
+            <p>Our team is here to help you understand how we protect your data.</p>
+            <a href="#" class="cta-button">Contact Support</a>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div id="modal-text"></div>
+        </div>
+    </div>
+
+    <script>
+        const modalContent = {
+            'data-collection': {
+                title: 'Data Collection Policy',
+                content: `
+                    <h2>Data Collection Policy</h2>
+                    <p>We collect various types of information to provide and improve our services:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Account information (name, email, etc.)</li>
+                        <li>Course progress and learning preferences</li>
+                        <li>Usage data and analytics</li>
+                        <li>Payment information (when applicable)</li>
+                    </ul>
+                    <p style="margin-top: 20px;">This information helps us personalize your learning experience and improve our platform.</p>
+                `
+            },
+            'data-security': {
+                title: 'Data Security Measures',
+                content: `
+                    <h2>Data Security Measures</h2>
+                    <p>We implement various security measures to protect your data:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>End-to-end encryption for sensitive data</li>
+                        <li>Regular security audits and updates</li>
+                        <li>Secure data centers and backup systems</li>
+                        <li>Strict access controls and authentication</li>
+                    </ul>
+                `
+            },
+            'user-rights': {
+                title: 'Your Rights',
+                content: `
+                    <h2>Your Rights</h2>
+                    <p>As a user, you have the following rights:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Right to access your personal data</li>
+                        <li>Right to request data correction</li>
+                        <li>Right to delete your account</li>
+                        <li>Right to data portability</li>
+                    </ul>
+                `
+            },
+            'cookies': {
+                title: 'Cookie Policy',
+                content: `
+                    <h2>Cookie Policy</h2>
+                    <p>We use cookies to:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Remember your preferences</li>
+                        <li>Analyze site traffic and usage</li>
+                        <li>Personalize content and ads</li>
+                        <li>Improve site functionality</li>
+                    </ul>
+                    <p style="margin-top: 20px;">You can manage cookie preferences in your browser settings.</p>
+                `
+            }
+        };
+
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const modalText = document.getElementById('modal-text');
+            modalText.innerHTML = modalContent[type].content;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
+
+
+
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Course Navigation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --deep-blue: #0A2342;
+            --rich-teal: #39A9DB;
+            --soft-gray: #E8F1F2;
+            --accent-coral: #FF4F4F;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-gray);
+            line-height: 1.6;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 4rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            color: var(--rich-teal);
+            font-size: 1.5rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: var(--rich-teal);
+            transform: scale(1.2);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--rich-teal);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--rich-teal);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .cta-button {
+            background-color: var(--rich-teal);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(57,169,219,0.3);
+        }
+        .cta-button:hover {
+            background-color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(10,35,66,0.2);
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--deep-blue);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 70%;
+                height: 100%;
+                justify-content: center;
+                transition: 0.3s;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .logo {
+                font-size: 1rem;
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            .cta-button{
+                display: none;
+            }
+
+            .hero h1{
+                font-size: 2.5rem;
+            }
+            
+        }
+
+
+
+
+        
+        body {
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 2rem;
+            min-height: 100vh;
+            padding-top: 9rem;
+        }
+
+        .home{
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 5rem;
+        }
+
+        .hero {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .heading {
+            font-size: 4rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .year {
+            background-color: #FF1493;
+            padding: 0.2rem 0.5rem;
+            color: white;
+            display: inline-block;
+        }
+
+        .highlight {
+            color: #00FFDD;
+            display: inline-block;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+
+        .signup-button {
+            background-color: #8A2BE2;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .signup-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .code-editor {
+            margin-top: 3rem;
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .editor-header {
+            padding: 1rem;
+            background-color: #2D2D2D;
+            border-bottom: 1px solid #3E3E3E;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background-color: #FF605C; }
+        .yellow { background-color: #FFBD44; }
+        .green { background-color: #00CA4E; }
+
+        .editor-content {
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .keyword { color: #FF69B4; }
+        .string { color: #FFD700; }
+        .boolean { color: #FFA500; }
+        .function { color: #00FFDD; }
+        .object { color: #4169E1; }
+        .number { color: #FF8C00; }
+
+
+
+
+
+
+
+
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .header2 {
+            text-align: center;
+            margin-bottom: 8rem;
+        }
+
+        .name{
+            font-size: 3rem;
+        }
+
+        .hello {
+            color: #a78bfa;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 30%, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+
+        .subtitle2 {
+            color: #94a3b8;
+            font-size: 1.4rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, 
+                rgba(168, 85, 247, 0.1), 
+                transparent 70%);
+            pointer-events: none;
+        }
+
+        .icon-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+        }
+
+        .isometric-element {
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .code-block {
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            transform: rotateX(45deg) rotateZ(-45deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            border-radius: 4px;
+            transform: translateX(40px) translateY(40px) rotateX(45deg) rotateZ(-45deg);
+        }
+
+        .bracket {
+            width: 20px;
+            height: 100px;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            border-radius: 20px;
+            transform: translateX(-20px) translateY(10px) rotateX(45deg) rotateZ(-45deg);
+        }
+
+        .card:hover .isometric-element {
+            transform: translateZ(20px) scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card-description {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            .title {
+                font-size: 2rem;
+            }
+        }
+
+
+
+
+
+
+        
+        .container4 {
+            max-width: 800px;
+            margin: 0 auto;
+            flex: 1;
+            text-align: center;
+            margin-top: 7rem;
+        }
+
+        .subtitle4 {
+            color: #9d5cff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .description2 {
+            color: #888;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+        }
+
+        .company-name {
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.1rem;
+            text-decoration: none;
+            width: 200px;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background-color: #6c2eff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #ff39b0;
+            color: white;
+        }
+
+        footer {
+            margin-top: 4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: #666;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #fff;
+        }
+
+        .footer-text {
+            color: #666;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .description {
+                font-size: 1.4rem;
+            }
+
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            CodeWithCreator
+        </div>
+        <ul class="nav-links">
+            <li><a href="./index.html" class="active">Home</a></li>
+            <li><a href="./course.html">Courses</a></li>
+            <li><a href="Resources.html">Resources</a></li>
+            <li><a href="./project.html">Projects</a></li>
+            <li><a href="./contact-form (1).html">Contact</a></li>
+        </ul>
+        <a href="./course.html" class="cta-button">Start Course</a>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+
+    <section class="home">
+    <div class="hero">
+        <h1 class="heading">
+            Make <span class="year">2025</span> the<br>
+            Year You <span class="highlight">Master</span><br>
+            <span class="highlight">Coding</span>
+        </h1>
+        <p class="description">
+            Structured, no-fluff courses designed to give you practical skills and a clear path to success.
+        </p>
+        <a href="./course.html" class="signup-button">
+            Enroll Now →
+        </a>
+    </div>
+
+    <div class="code-editor">
+        <div class="editor-header">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+        </div>
+        <div class="editor-content">
+            <pre><span class="keyword">const</span> coder = {
+    name: <span class="string">'Code With Creator'</span>,
+    skills: [<span class="string">'React'</span>, <span class="string">'Node'</span>],
+    hardWorker: <span class="boolean">true</span>,
+    problemSolver: <span class="boolean">true</span>,
+    <span class="function">hireable</span>: <span class="keyword">function</span>() {
+        <span class="keyword">return</span> (
+            <span class="object">this</span>.hardWorker &&
+            <span class="object">this</span>.problemSolver &&
+            <span class="object">this</span>.skills.length >= <span class="number">5</span>
+        );
+    }
+}</pre>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="header2">
+    <div class="hello">Hello,</div>
+    <h1 class="name">I'm Mudassar Latif.</h1>
+    <p class="subtitle2">
+        I've spent 1+ years in software engineering, and my goal isn't just to teach you to code — it's to help you think like a professional software engineer, master problem-solving, and build skills you'll use for life.
+    </p>
+</div>
+
+
+<header class="header">
+    <h1 class="title">More than Just Code</h1>
+    <p class="subtitle">I go beyond the "what" and show you the "why" and "how" behind every concept, so you can code with real understanding.</p>
+</header>
+
+<div class="cards-container">
+    <!-- Card 1 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Real-World Projects</h2>
+        <p class="card-description">Build professional projects that solve actual business problems and showcase your skills.</p>
+        <div class="features">
+            <span class="feature-tag">Hands-on</span>
+            <span class="feature-tag">Portfolio</span>
+        </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Deep Understanding</h2>
+        <p class="card-description">Learn the principles and patterns behind the code, not just syntax and methods.</p>
+        <div class="features">
+            <span class="feature-tag">Concepts</span>
+            <span class="feature-tag">Theory</span>
+        </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Best Practices</h2>
+        <p class="card-description">Master industry-standard coding practices and architectural patterns.</p>
+        <div class="features">
+            <span class="feature-tag">Clean Code</span>
+            <span class="feature-tag">Architecture</span>
+        </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Problem Solving</h2>
+        <p class="card-description">Develop critical thinking skills to tackle any programming challenge.</p>
+        <div class="features">
+            <span class="feature-tag">Logic</span>
+            <span class="feature-tag">Analytics</span>
+        </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Career Growth</h2>
+        <p class="card-description">Learn skills that will accelerate your career progression in software.</p>
+        <div class="features">
+            <span class="feature-tag">Industry</span>
+            <span class="feature-tag">Skills</span>
+        </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card">
+        <div class="icon-container">
+            <div class="isometric-element code-block"></div>
+            <div class="isometric-element book"></div>
+            <div class="isometric-element bracket"></div>
+        </div>
+        <h2 class="card-title">Modern Tools</h2>
+        <p class="card-description">Stay up-to-date with the latest technologies and development tools.</p>
+        <div class="features">
+            <span class="feature-tag">Tech Stack</span>
+            <span class="feature-tag">Tools</span>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container4">
+    <p class="subtitle4">Recognized by Professionals</p>
+    <h1>Trusted by Employees at Leading Companies</h1>
+    <p class="description2">
+        My courses are used by professionals from top companies like 
+        <span class="company-name">Microsoft</span>, 
+        <span class="company-name">Amazon</span>, and 
+        <span class="company-name">Google</span>, 
+        helping them sharpen their skills and stay ahead in their fields.
+    </p>
+    <div class="buttons">
+        <a href="./course.html" class="btn btn-primary">Browse Courses</a>
+        <a href="#" class="btn btn-secondary">Join for Free</a>
+    </div>
+</div>
+
+<footer>
+    <p class="footer-text">© Code with Creator</p>
+    <div class="social-links">
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <div class="footer-links">
+        <a href="./terms.html">Terms of Use</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+    </div>
+</footer>
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+    </script>
+</body>
+</html>

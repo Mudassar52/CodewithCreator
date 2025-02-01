@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Card Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f6f8ff 0%, #f0f2f5 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+
+
+        
+        :root {
+            --deep-blue: #0A2342;
+            --rich-teal: #39A9DB;
+            --soft-gray: #E8F1F2;
+            --accent-coral: #FF4F4F;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-gray);
+            line-height: 1.6;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 4rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            color: var(--rich-teal);
+            font-size: 1.5rem;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: var(--rich-teal);
+            transform: scale(1.2);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--rich-teal);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--rich-teal);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .cta-button {
+            background-color: var(--rich-teal);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(57,169,219,0.3);
+        }
+        .cta-button:hover {
+            background-color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(10,35,66,0.2);
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--deep-blue);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 70%;
+                height: 100%;
+                justify-content: center;
+                transition: 0.3s;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .logo {
+                font-size: 1rem;
+            }
+
+            .cta-button{
+                display: none;
+            }
+
+            .container{
+                padding-top: 5rem;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 5rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 1rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4));
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: #1976d2;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-buttons a{
+            text-decoration: none;
+        }
+
+        .download-button {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .download-button.primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .download-button.secondary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 1.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .star-icon {
+            color: #fbbf24;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            CodeWithCreator
+        </div>
+        <ul class="nav-links">
+            <li><a href="./index.html" class="active">Home</a></li>
+            <li><a href="./course.html">Courses</a></li>
+            <li><a href="Resources.html">Resources</a></li>
+            <li><a href="./project.html">Projects</a></li>
+            <li><a href="./contact-form (1).html">Contact</a></li>
+        </ul>
+        <a href="./course.html" class="cta-button">Start Course</a>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/desktop\ \(1\).png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Business Agency Website</h2>
+                    <p class="card-description">Business Agency all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/adex-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/desktop\ \(11\).png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Essential</span>
+                    <h2 class="card-title">Todo App</h2>
+                    <p class="card-description">Todo App all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/taskbuddy-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.8</span>
+                            <span class="stat">2.8k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           <!-- Card 3 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/fast\ food.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Fast Food Website</h2>
+                    <p class="card-description">Complete Fast Food all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="path/to/document1.pdf" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/Desinic.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Desinic</h2>
+                    <p class="card-description">Desinic all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/desinic-master.zip" class="download-button primary" download>Download Source</a> 
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Card 5 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/eduweb.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Education Website</h2>
+                    <p class="card-description">Education Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/eduweb-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 6 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/e-commerce.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Glowing E-Commerce</h2>
+                    <p class="card-description">Glowing E-Commerce all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/glowing-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 7 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/Blog\ Website.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Blog Website</h2>
+                    <p class="card-description">Complete Blog Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/blogy-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 8 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/Dental.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Dental Website</h2>
+                    <p class="card-description">Complete Dental Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/dentelo-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 9 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/FootCap.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">FootCap Website</h2>
+                    <p class="card-description">Complete FootCap Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/footcap-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 10 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/vast.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">App Landing Page</h2>
+                    <p class="card-description">App Landing Page Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/vast-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 11 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/fitness.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Fitness Website</h2>
+                    <p class="card-description">Fitness Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/fitlife-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 12 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/organica.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Organica E-Commerce</h2>
+                    <p class="card-description">Organica E-Commerce Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/organica-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 13 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/Barber.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Barber Website</h2>
+                    <p class="card-description">Barber Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/barber-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 14 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/autofix.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">AutoFix Website</h2>
+                    <p class="card-description">autofix Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/autofix-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 15 -->
+            <div class="card">
+                <div class="card-image" style="background-image: url('./Image/fast\ food.png')">
+                    <div class="card-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Premium</span>
+                    <h2 class="card-title">Food restaurant Website</h2>
+                    <p class="card-description">restaurant Website all devices responsive web applications.</p>
+                    <div class="card-buttons">
+                        <a href="./Download/2/foodhub-restaurant-website-master.zip" class="download-button primary" download>Download Source</a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="stat"><span class="star-icon">★</span> 4.9</span>
+                            <span class="stat">3.2k Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add remaining cards with similar structure -->
+        </div>
+    </div>
+
+    <script>
+        // Enhanced button click animation
+        document.querySelectorAll('.download-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                
+                // Add click handling logic
+                console.log('Download button clicked:', 
+                    this.textContent,
+                    'from card:',
+                    this.closest('.card').querySelector('.card-title').textContent
+                );
+                
+                // Simulate download start
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+
+        // Enhanced card animation on scroll
+        const cards = document.querySelectorAll('.card');
+        
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '20px'
+        });
+
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.5s ease';
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+
+
+        
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+
+
+          // Add click event listeners to all buttons
+          document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // You can add additional functionality here
+                console.log('Downloading:', this.href);
+                
+                // Optional: Add analytics or tracking
+                // trackDownload(this.href);
+            });
+        });
+
+        // Optional: Function to track downloads
+        function trackDownload(url) {
+            // Add your tracking logic here
+            console.log('Download tracked:', url);
+        }
+
+    </script>
+</body>
+</html>

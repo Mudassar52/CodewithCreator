@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Course Cards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        
+ :root {
+            --deep-blue: #0A2342;
+            --rich-teal: #39A9DB;
+            --soft-gray: #E8F1F2;
+            --accent-coral: #FF4F4F;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-gray);
+            line-height: 1.6;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 4rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            color: var(--rich-teal);
+            font-size: 1.5rem;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: var(--rich-teal);
+            transform: scale(1.2);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--rich-teal);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--rich-teal);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .cta-button {
+            background-color: var(--rich-teal);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(57,169,219,0.3);
+        }
+        .cta-button:hover {
+            background-color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(10,35,66,0.2);
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--deep-blue);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 70%;
+                height: 100%;
+                justify-content: center;
+                transition: 0.3s;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .logo {
+                font-size: 1rem;
+            }
+
+            .cta-button{
+                display: none;
+            }
+
+            .container{
+                padding-top: 5rem;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            perspective: 1000px;
+            padding-top: 6rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-type {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.2);
+        }
+
+        .card:hover .course-type {
+            transform: translateY(-3px);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2d3436;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #2575fc;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #636e72;
+            font-size: 0.95rem;
+        }
+
+        .card-info i {
+            color: #6a11cb;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-info i {
+            transform: scale(1.2);
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            opacity: 0.9;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .download-buttons {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .download-btn {
+            flex: 1;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .download-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .materials-btn {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2d3436;
+        }
+
+        .materials-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 237, 234, 0.4);
+        }
+
+        .resources-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+        }
+
+        .resources-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+
+        /* Progress bar animation */
+        @keyframes downloadProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        .downloading .download-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #2575fc;
+            animation: downloadProgress 1s ease forwards;
+        }
+
+        .download-buttons a{
+            text-decoration: none;
+        }
+
+        /* Floating animation for cards */
+        @keyframes floating {
+            0% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-15px) rotateX(5deg); }
+            100% { transform: translateY(0) rotateX(5deg); }
+        }
+
+        .card:hover {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        /* Skill level indicator */
+        .skill-level {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2d3436;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .skill-level {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            CodeWithCreator
+        </div>
+        <ul class="nav-links">
+            <li><a href="./index.html" class="active">Home</a></li>
+            <li><a href="./course.html">Courses</a></li>
+            <li><a href="./Resources.html">Resources</a></li>
+            <li><a href="./project.html">Projects</a></li>
+            <li><a href="./contact-form (1).html">Contact</a></li>
+        </ul>
+        <a href="./course.html" class="cta-button">Start Course</a>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/html.png" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete HTML Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/Beginners_Guide_to_HTML.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i>  Notes
+                    </a>
+                    <a href="./Notes/HTML5-Cheat-Sheet.pdf" class="download-btn resources-btn " download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/css.jpg" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete CSS Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/CSSNotesForProfessionals.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i> Notes
+                    </a>
+                    <a href="./Notes/css.pdf" class="download-btn resources-btn" download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/Javascript.jpg" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete Javascript Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/JS Notes.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i> Notes
+                    </a>
+                    <a href="./Notes/Javascript-Cheat-Sheet.pdf" class="download-btn resources-btn " download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/nodejs.jpg" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete Node.js Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/PDF-Guide-Node-Andrew-Mead-v3.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i> Notes
+                    </a>
+                    <a href="./Notes/node-cheatsheet.pdf" class="download-btn resources-btn " download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card 5 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/mongoDB.jpg" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete MongoDB Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/mongodb.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i> Notes
+                    </a>
+                    <a href="./Notes/Mongo_DB_Shell_Cheat_Sheet_1a0e3aa962.pdf" class="download-btn resources-btn " download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card 6 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="./Image/mongoDB.jpg" alt="Web Development Course">
+                <div class="skill-level">Beginner Friendly</div>
+            </div>
+            <div class="card-content">
+                <span class="course-type">Web Development</span>
+                <h3 class="card-title">Complete Mongoose Course</h3>
+                <div class="card-info">
+                    <span><i class="fas fa-clock"></i> 12 hours</span>
+                    <span><i class="fas fa-video"></i> 24 lessons</span>
+                </div>
+                <div class="download-buttons">
+                    <a href="./Notes/Mongoose-for-Application-Development.pdf" class="download-btn materials-btn" download>
+                        <i class="fas fa-download"></i> Notes
+                    </a>
+                    <a href="./Notes/Infor-Mongoose-Cheat-Sheet.pdf" class="download-btn resources-btn " download>
+                        <i class="fas fa-file-archive"></i> Cheat Sheet
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat the same enhanced card structure for cards 2-8 with different content -->
+        <!-- Additional cards would follow the same structure but with different content -->
+    </div>
+
+    <script>
+         // Add click event listeners to all buttons
+         document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // You can add additional functionality here
+                console.log('Downloading:', this.href);
+                
+                // Optional: Add analytics or tracking
+                // trackDownload(this.href);
+            });
+        });
+
+        // Optional: Function to track downloads
+        function trackDownload(url) {
+            // Add your tracking logic here
+            console.log('Download tracked:', url);
+        }
+
+        // Add hover effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+    </script>
+</body>
+</html>
